@@ -1,0 +1,75 @@
+{
+  "sqlglot_commit": "eb11aec4be8cb2122afe713a4816662c3f0fb2fa",
+  "map_platform": "Linux amd64 Python 3.13 pinned Docker image",
+  "map_tests_passed": 1620,
+  "map_tests_skipped": 1,
+  "map_subtests_passed": 25440,
+  "sample_commits": 30,
+  "sample_simulated_seconds": 178.622,
+  "sample_missed_commits": 0,
+  "container_cpu_seconds_runs": [
+    3.133741,
+    3.46134,
+    3.6103270000000003
+  ],
+  "container_cpu_seconds_median": 3.46134,
+  "sample_total_seconds_median": 182.08334000000002,
+  "unit_checks_passed": 5,
+  "independent_mutations": [
+    {
+      "mutation": "fraction_boundary",
+      "selected": 5,
+      "failed": 2,
+      "missing": []
+    },
+    {
+      "mutation": "empty_deserialization",
+      "selected": 37,
+      "failed": 0,
+      "missing": []
+    },
+    {
+      "mutation": "sqlite_casefold",
+      "selected": 266,
+      "failed": 1,
+      "missing": []
+    },
+    {
+      "mutation": "list_tuple",
+      "selected": 643,
+      "failed": 2,
+      "missing": []
+    },
+    {
+      "mutation": "header_runtime_error",
+      "selected": 1620,
+      "failed": 1600,
+      "missing": []
+    },
+    {
+      "mutation": "class_import_error",
+      "selected": 1620,
+      "failed": 117,
+      "missing": []
+    }
+  ],
+  "runtime_constraints": "linux/amd64; network none; 2 CPU; 4096 MiB; pids 256; read-only root; 64 MiB /tmp; UID 65534; caps dropped; no new privileges",
+  "limitations": "Public-sample results are not comparable to the hidden leaderboard. Dynamic coverage is not a proof for arbitrary edits. Independent mutations were executed on local Python, with failure sets rechecked against the Linux map. CPU measured via getrusage includes child probes.",
+  "files_sha256": {
+    "Dockerfile": "ccb1b81a71a8b18d915090040af2fad802ad0c1c0a807ddf2ebaa07accef5025",
+    "selector.py": "a362a470b49ebac1827cd72705c6e192fc605d1672e0a59c1c45025a078cc331",
+    "import_probe.py": "004963cce50ce82c1476f6235e73704cdad4bbdd442bf02d1077124a7d7a7da9",
+    "fetch_source.py": "4c1d71c4b09db05330d3d9654c4613b797c1d6b36adea2f0c10b77cf74e8b83f",
+    "dependencies.json.gz": "8442dc31ec0948c7b58c2feb030fd834c5984abdd0703f971acbddba6659d8e5",
+    "build_map.py": "0c5c2f3a05a53c8290af1cca9a21150d92374565eeed3652583946ca9d254e19",
+    "requirements.lock": "4201e26c5e438697189dbfb809917eb8618d488a6926eee0f49858aad971d212",
+    "requirements-map.txt": "49a15872b3b45649b4f6273852a5d6dde9560dd1011807594ce68f4a61650754",
+    "Dockerfile.map": "8cfc251fe2f24e41841009ed7c2e5ea1c5f784d65f2b1ca97c5aa72a567ec15d",
+    "README.md": "c2cc7c322fbf0dbcb3f13424bb8e921b296f23c1a002ec73308e1c9837511ba3",
+    "SCORING.md": "26a9941ca2980d8da00bea00910a29703efac95ec79e30a15ab3482e3a9c0903",
+    "score.py": "e38e583c82831021e07baa9713096586c835397a1cfdcd739073c394e866cd3f",
+    "Makefile": "633eea0ffa55257dc8a88052ed7f43ab40b1819b6ea6fa3f02c0155b887eb7c2",
+    "test_selector.py": "d25afcb71ba2f85115749463d95726615c68ff5b1cc7d7ff8f092463c7cf4bc4",
+    ".dockerignore": "d370c4a83b75f244576a3f4675615690d4ccee060b13135e9ee58d8701c25afa"
+  }
+}

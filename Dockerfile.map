@@ -3,6 +3,6 @@ COPY fetch_source.py /app/fetch_source.py
 RUN python /app/fetch_source.py
 COPY requirements.lock requirements-map.txt /app/
 RUN pip install --no-cache-dir -r /app/requirements-map.txt
-COPY build_map.py /app/build_map.py
+COPY build_map.py build_attributes.py attrtrace.py merge_maps.py attribute_select.py /app/
 ENV PYTHONDONTWRITEBYTECODE=1 SKIP_INTEGRATION=0
 ENTRYPOINT ["python", "/app/build_map.py", "/opt/sqlglot", "/out/dependencies.json.gz"]

@@ -3,6 +3,8 @@
 No patch identifiers, mutation signatures, or sample answers are used.
 """
 import ast
+from refine import changed_lines
+from attribute_select import choose_attribute
 import gzip
 import json
 import os
@@ -48,7 +50,9 @@ def import_time_shape(tree):
     return [ast.dump(ast.FunctionDef(name=n.name, args=n.args, body=[],
                     decorator_list=n.decorator_list, returns=n.returns,
                     type_params=getattr(n, 'type_params', [])), include_attributes=False)
-            for n in ast.walk(tree) if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))]
+            for n in ast.walk(tree) if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))] + [
+                ('lambda', ast.dump(n.args, include_attributes=False))
+                for n in ast.walk(tree) if isinstance(n, ast.Lambda)]
 
 @lru_cache(maxsize=128)
 def imports_cleanly(path, source):
@@ -167,8 +171,9 @@ def choose(patch, tests, dependencies):
         line_map = dependencies.get('lines', {}).get(path)
         if not line_map:
             return tests
-        functions = [n for n in ast.walk(before) if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))]
-        for line in change['lines']:
+        functions = [n for n in ast.walk(before) if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda))]
+        precise = changed_lines(before, after)
+        for line in (precise if precise is not None else change['lines']):
             scopes = [n for n in functions if n.lineno <= line <= n.end_lineno]
             if not scopes:
                 enclosing = class_scope(before, line)
@@ -182,6 +187,10 @@ def choose(patch, tests, dependencies):
                 cls, qualname = enclosing
                 module = path.removesuffix('.py').replace('/', '.')
                 module = module.removesuffix('.__init__')
+                narrow = choose_attribute(before, after, precise if precise is not None else change['lines'], module, qualname, SOURCE, dependencies)
+                if narrow is not None:
+                    selected.update(narrow)
+                    continue
                 contexts = set(dependencies['class_uses'].get(module + ':' + qualname, []))
                 for num in range(cls.lineno, cls.end_lineno + 1):
                     contexts.update(line_map.get(str(num), []))

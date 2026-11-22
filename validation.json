@@ -1,75 +1,102 @@
 {
+  "status": "validated locally; not uploaded or submitted",
   "sqlglot_commit": "eb11aec4be8cb2122afe713a4816662c3f0fb2fa",
-  "map_platform": "Linux amd64 Python 3.13 pinned Docker image",
-  "map_tests_passed": 1620,
-  "map_tests_skipped": 1,
-  "map_subtests_passed": 25440,
-  "sample_commits": 30,
-  "sample_simulated_seconds": 178.622,
+  "baseline_published_commit": "a807f407114d076e19f344c10a88faf47678a075",
+  "baseline_hidden_score": 351.3,
+  "candidate_hidden_score": null,
+  "baseline_public_sample_total": 182.08334,
+  "sample_simulated_seconds": 168.649,
   "sample_missed_commits": 0,
   "container_cpu_seconds_runs": [
-    3.133741,
-    3.46134,
-    3.6103270000000003
+    3.417121,
+    3.414866,
+    3.420299
   ],
-  "container_cpu_seconds_median": 3.46134,
-  "sample_total_seconds_median": 182.08334000000002,
-  "unit_checks_passed": 5,
+  "sample_total_seconds_median": 172.066121,
+  "unit_checks_passed": 13,
+  "attribute_map_tests_passed": 1620,
+  "attribute_map_tests_skipped": 1,
+  "attribute_map_subtests_passed": 25440,
   "independent_mutations": [
     {
       "mutation": "fraction_boundary",
       "selected": 5,
       "failed": 2,
-      "missing": []
+      "missing": [],
+      "baseline_simulated": 2.168,
+      "candidate_simulated": 2.168
     },
     {
       "mutation": "empty_deserialization",
       "selected": 37,
       "failed": 0,
-      "missing": []
+      "missing": [],
+      "baseline_simulated": 25.454,
+      "candidate_simulated": 25.454
     },
     {
       "mutation": "sqlite_casefold",
-      "selected": 266,
+      "selected": 9,
       "failed": 1,
-      "missing": []
+      "missing": [],
+      "baseline_simulated": 11.133,
+      "candidate_simulated": 4.156
     },
     {
       "mutation": "list_tuple",
-      "selected": 643,
+      "selected": 2,
       "failed": 2,
-      "missing": []
+      "missing": [],
+      "baseline_simulated": 27.454,
+      "candidate_simulated": 2.194
     },
     {
       "mutation": "header_runtime_error",
       "selected": 1620,
       "failed": 1600,
-      "missing": []
+      "missing": [],
+      "baseline_simulated": 36.817,
+      "candidate_simulated": 36.817
     },
     {
       "mutation": "class_import_error",
       "selected": 1620,
       "failed": 117,
-      "missing": []
+      "missing": [],
+      "baseline_simulated": 36.817,
+      "candidate_simulated": 36.817
+    },
+    {
+      "mutation": "duckdb_index_offset",
+      "selected": 20,
+      "failed": 8,
+      "missing": [],
+      "baseline_simulated": 27.454,
+      "candidate_simulated": 4.3
     }
   ],
-  "runtime_constraints": "linux/amd64; network none; 2 CPU; 4096 MiB; pids 256; read-only root; 64 MiB /tmp; UID 65534; caps dropped; no new privileges",
-  "limitations": "Public-sample results are not comparable to the hidden leaderboard. Dynamic coverage is not a proof for arbitrary edits. Independent mutations were executed on local Python, with failure sets rechecked against the Linux map. CPU measured via getrusage includes child probes.",
+  "runtime_constraints": "linux/amd64; 2 CPUs; 4096 MiB; no network; read-only root; uid65534; 64MiB tmp; pids256; capabilities dropped",
+  "limitations": "Sample scores are not comparable to hidden scores. No evidence establishes an under-150 hidden result. Baseline coverage and seven mutation checks do not prove correctness on arbitrary Python edits. Runtime filtering experiments were rejected after CPU cost exceeded savings.",
   "files_sha256": {
-    "Dockerfile": "ccb1b81a71a8b18d915090040af2fad802ad0c1c0a807ddf2ebaa07accef5025",
-    "selector.py": "a362a470b49ebac1827cd72705c6e192fc605d1672e0a59c1c45025a078cc331",
-    "import_probe.py": "004963cce50ce82c1476f6235e73704cdad4bbdd442bf02d1077124a7d7a7da9",
-    "fetch_source.py": "4c1d71c4b09db05330d3d9654c4613b797c1d6b36adea2f0c10b77cf74e8b83f",
-    "dependencies.json.gz": "8442dc31ec0948c7b58c2feb030fd834c5984abdd0703f971acbddba6659d8e5",
-    "build_map.py": "0c5c2f3a05a53c8290af1cca9a21150d92374565eeed3652583946ca9d254e19",
-    "requirements.lock": "4201e26c5e438697189dbfb809917eb8618d488a6926eee0f49858aad971d212",
-    "requirements-map.txt": "49a15872b3b45649b4f6273852a5d6dde9560dd1011807594ce68f4a61650754",
-    "Dockerfile.map": "8cfc251fe2f24e41841009ed7c2e5ea1c5f784d65f2b1ca97c5aa72a567ec15d",
-    "README.md": "c2cc7c322fbf0dbcb3f13424bb8e921b296f23c1a002ec73308e1c9837511ba3",
+    ".dockerignore": "d370c4a83b75f244576a3f4675615690d4ccee060b13135e9ee58d8701c25afa",
+    "Dockerfile": "cd8174257a6325589cdf48f79cca4cd344d0273cd7196822c0ab607b9351aed2",
+    "Dockerfile.map": "955ad3ab5de3ddf739b783fd67bde81d3c228b5f599fc0860a56ba132ff12248",
+    "README.md": "b17e2f89f796ae50ad7cd89d8065c2728aa9f62723487cfb57b201e8a2472d22",
     "SCORING.md": "26a9941ca2980d8da00bea00910a29703efac95ec79e30a15ab3482e3a9c0903",
+    "attribute_select.py": "1cf20140b955121dca62e496b8dac4cd5162c6c3ac87556b58c053abc176cd55",
+    "attrtrace.py": "c4d5db04aa843b3af1816e86149d1045044b1bb76aeeb88ecdae523082653996",
+    "build_attributes.py": "1a171f835d314178dff2ccf1b238f1edf9fed46e2238597b63e9aaaeeca369a6",
+    "build_map.py": "0c5c2f3a05a53c8290af1cca9a21150d92374565eeed3652583946ca9d254e19",
+    "dependencies.json.gz": "436e5f41564177ac7d0dbedb277ab9f44b763fa461a746c9d5df1e8e8b88468d",
+    "fetch_source.py": "4c1d71c4b09db05330d3d9654c4613b797c1d6b36adea2f0c10b77cf74e8b83f",
+    "import_probe.py": "004963cce50ce82c1476f6235e73704cdad4bbdd442bf02d1077124a7d7a7da9",
+    "merge_maps.py": "b6c62e379190b544adb71362896b4f3825c61314af05791d25f410656cd4a70f",
+    "refine.py": "d4eb50dfee70b59447725c788909e0b97530f6c1d7e2243b42955465a7231692",
+    "requirements-map.txt": "49a15872b3b45649b4f6273852a5d6dde9560dd1011807594ce68f4a61650754",
+    "requirements.lock": "4201e26c5e438697189dbfb809917eb8618d488a6926eee0f49858aad971d212",
     "score.py": "e38e583c82831021e07baa9713096586c835397a1cfdcd739073c394e866cd3f",
-    "Makefile": "633eea0ffa55257dc8a88052ed7f43ab40b1819b6ea6fa3f02c0155b887eb7c2",
-    "test_selector.py": "d25afcb71ba2f85115749463d95726615c68ff5b1cc7d7ff8f092463c7cf4bc4",
-    ".dockerignore": "d370c4a83b75f244576a3f4675615690d4ccee060b13135e9ee58d8701c25afa"
+    "selector.py": "27440868d77d5e8677f16025c96d6a5f5e0340e290de3caa8d9bae8f7354f444",
+    "test_precision.py": "3ec8dea7f6744c724d932d99d4cc6b6d8fa6a68183f61e6fe70f26aee707e092",
+    "test_selector.py": "d25afcb71ba2f85115749463d95726615c68ff5b1cc7d7ff8f092463c7cf4bc4"
   }
 }

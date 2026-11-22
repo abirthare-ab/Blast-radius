@@ -1,68 +1,44 @@
-# Blast Radius entry
+# Blast Radius precision candidate
 
-Select tests using dependencies measured on the competition's pinned SQLGlot
-commit, then minimize the recorded worker cost using longest-job-first packing
-for each worker count from one through eight.
+This candidate narrows changed-source statements using AST structure and records
+actual readers of existing literal uppercase class settings. Reflection through
+literal strings, shared setup, import-time initialization, function and lambda
+headers, and incomplete maps retain conservative handling. Unknown edits keep
+all tests. It does not contain patch IDs, sample answers, or edit-answer tables.
 
-## Design
+This is an experimental improvement over the published 351.3-second entry. See
+validation.json for measured public-sample results. Public-sample results are NOT
+hidden leaderboard predictions; no under-150 hidden score has been demonstrated.
 
-`build_map.py` executes the pristine pinned test suite and records:
+## Container
 
-- test contexts for executed source lines;
-- files read by each test, including class-wide fixture setup;
-- concrete runtime classes and their bases, including inherited constructors.
+Build Dockerfile for linux/amd64. The runtime reads /data/tests.json and patches
+from /data/commits, prints the specified JSONL, and needs no writable source tree
+or network. Dependencies are precomputed from the pinned pristine SQLGlot commit.
 
-The selector applies each incoming diff in memory. It selects consumers of changed
-statements or class attributes. Uncertain edits fall back to all tests. Function
-signature, default, decorator, encoding and module-initialization changes receive
-conservative handling. Class-level edits receive an isolated import check before
-class-consumer narrowing. AST-identical edits retain any source-reading tests.
+## Map reproduction
 
-No patch IDs, sample answers, mutation-answer tables, or competitor code are used.
-The compressed dependency map is source-derived data committed as a normal Git
-file. `sample/answers.json` is exclusively an offline evaluator input and is not
-copied into the container.
+Dockerfile.map installs pinned test dependencies and downloads the pinned source.
+Run its default command to produce a baseline map. Then run the attribute pass:
 
-## Reproduce
+    docker run --rm --platform linux/amd64 --network none \
+      -v "$PWD/map-output:/out" --entrypoint python blast-map \
+      /app/build_attributes.py /opt/sqlglot /out/attributes.json.gz
+    python merge_maps.py map-output/dependencies.json.gz \
+      map-output/attributes.json.gz dependencies.json.gz /path/to/pristine/sqlglot
 
-With the official starter's `sample/` directory alongside the Makefile, build and
-run the public sample (Docker with Buildx):
+Both map runs must pass. The attribute pass allows extra test time for tracing;
+that offline timeout does not change the submission's runtime limits.
 
-```sh
-make sample
-python3 test_selector.py
-```
+## Validation
 
-The image's Python base is pinned by digest. Its only build-time download is the
-permitted SQLGlot repository archive at
-`eb11aec4be8cb2122afe713a4816662c3f0fb2fa`. The runtime has no network and writes
-no files. The optional import checks are child Python processes whose CPU time
-counts toward the score.
+    python -m unittest test_selector test_precision
 
-The shipped map is generated on Linux amd64 with the same pinned Python image.
-To reproduce it (allow several minutes for tracing):
+Use the official sample and score.py for simulated cost. CPU seconds must also be
+measured inside the restricted container. Dynamic coverage is not a proof of
+correctness for arbitrary Python edits. Attribute narrowing is disabled unless
+its complete baseline suite passed and covered the original collected tests.
 
-```sh
-mkdir -p map-output
-docker buildx build --platform linux/amd64 --load -f Dockerfile.map -t blast-map .
-docker run --rm --platform linux/amd64 --network none -v "$PWD/map-output:/out" blast-map
-cp map-output/dependencies.json.gz .
-```
+## Measured results
 
-Alternatively, install `requirements-map.txt` in Python 3.13 and run:
-
-```sh
-python build_map.py /path/to/pristine/sqlglot dependencies.json.gz
-```
-
-During instrumentation only, process-pool jobs run synchronously so their lines
-retain the originating test context. Arguments and results still undergo pickle
-round-trips, capturing serialization dependencies. This does not modify upstream
-source. `SCORING.md` contains the official metric and runtime restrictions.
-
-## Validation limits
-
-The public sample and independent synthetic mutations are development checks,
-not proof of correctness on hidden patches. Dynamic coverage cannot establish
-complete dependency soundness for arbitrary Python edits. The final hidden score
-must be measured by the competition.
+The same public sample improved from 182.08334 to 172.066121 seconds including median CPU. All three restricted container runs had zero sample misses. Thirteen unit checks and seven independent mutation checks passed. No hidden score exists for this candidate. The known submitted score remains 351.3 seconds.
